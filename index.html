@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Tip Calculator</title>
-    <meta name="description" content="A quick and easy online tip calculator to determine tip amount and total bill. Perfect for restaurants and services.">
+    <title>Advanced Tip Calculator & Bill Splitter - Easy & Free Online Tool</title>
+    <meta name="description" content="Calculate tips easily and split your restaurant bill among friends with our free, fast, and simple online tip calculator. Includes common tip percentages.">
+    <link rel="icon" href="https://www.google.com/s2/favicons?domain=example.com" type="image/x-icon"> 
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,7 +27,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 450px;
+            max-width: 500px; /* Slightly wider to accommodate new elements */
             width: 100%;
         }
 
@@ -57,7 +58,15 @@
             border-radius: 8px;
             font-size: 1.2em;
             box-sizing: border-box; /* Include padding in width */
+            -moz-appearance: textfield; /* Remove number input arrows in Firefox */
         }
+        /* Remove number input arrows in Webkit (Chrome, Safari) */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
 
         input[type="range"] {
             width: 100%;
@@ -97,6 +106,49 @@
             margin-top: 5px;
             text-align: right;
         }
+        
+        .tip-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+        .tip-buttons button {
+            background-color: #2ecc71; /* Greenish */
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .tip-buttons button:hover {
+            background-color: #27ae60;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end; /* Align to the right */
+            margin-top: 20px;
+        }
+        .actions button {
+            background-color: #95a5a6; /* Grey for Clear */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .actions button:hover {
+            background-color: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
 
         .results {
             background-color: #ecf0f1;
@@ -125,6 +177,53 @@
         }
         .results p:last-child span:last-child {
             color: #27ae60; /* Green for total */
+        }
+
+        /* Ko-fi Button Styling */
+        .ko-fi-button-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .ko-fi-button {
+            display: inline-block;
+            background-color: #FF5E5B; /* Ko-fi's brand color */
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex; /* To align icon and text */
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Space between icon and text */
+            max-width: fit-content;
+            margin: 0 auto; /* Center the button */
+        }
+        .ko-fi-button:hover {
+            background-color: #E04E4A;
+            transform: translateY(-2px);
+        }
+        .ko-fi-button img {
+            height: 24px; /* Icon size */
+            width: auto;
+        }
+
+        /* SEO Friendly Text Section */
+        .seo-text {
+            margin-top: 40px;
+            text-align: left;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #666;
+            padding: 0 10px;
+        }
+        .seo-text h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
         }
 
 
@@ -165,12 +264,15 @@
                 height: 60px; /* Smaller ad unit for mobile */
                 max-width: 320px;
             }
+            .tip-buttons {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>💲 Simple Tip Calculator</h1>
+        <h1>💲 Simple Tip Calculator & Bill Splitter</h1>
 
         <div class="input-group">
             <label for="billAmount">Bill Amount ($):</label>
@@ -181,52 +283,124 @@
             <label for="tipPercentage">Tip Percentage:</label>
             <input type="range" id="tipPercentage" min="0" max="30" value="15">
             <div class="tip-percentage-display" id="tipPercentageDisplay">15%</div>
+            <div class="tip-buttons">
+                <button data-tip="10">10%</button>
+                <button data-tip="15">15%</button>
+                <button data-tip="18">18%</button>
+                <button data-tip="20">20%</button>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="numPeople">Number of People:</label>
+            <input type="number" id="numPeople" value="1" min="1" step="1">
         </div>
 
         <div class="results">
             <p><span>Tip Amount:</span> $<span id="tipAmount">0.00</span></p>
             <p><span>Total Bill:</span> $<span id="totalBill">0.00</span></p>
+            <p><span>Per Person:</span> $<span id="perPersonAmount">0.00</span></p>
         </div>
+        
+        <div class="actions">
+            <button id="clearBtn">Clear All</button>
+        </div>
+
+        <div class="ko-fi-button-container">
+            <a href="https://ko-fi.com/ytseo1509" target="_blank" rel="noopener noreferrer" class="ko-fi-button">
+                <img src="https://ko-fi.com/img/favicon-32x32.png" alt="Ko-fi icon">
+                Support Me on Ko-fi
+            </a>
+        </div>
+
     </div>
 
     <div class="adsense-placeholder">
         Google AdSense Ad Here (Will be replaced with actual code)
     </div>
 
+    <div class="seo-text container">
+        <h2>Your Go-To Free Online Tip & Bill Calculator</h2>
+        <p>Effortlessly calculate tips for restaurants, cafes, and any service with our intuitive tool. Easily split the total bill among friends and family, ensuring everyone pays their fair share. Fast, free, and designed for convenience, this calculator is your perfect dining companion. No downloads or sign-ups needed—just quick, accurate results every time.</p>
+    </div>
+
     <script>
         const billAmountInput = document.getElementById('billAmount');
         const tipPercentageInput = document.getElementById('tipPercentage');
         const tipPercentageDisplay = document.getElementById('tipPercentageDisplay');
+        const numPeopleInput = document.getElementById('numPeople');
         const tipAmountSpan = document.getElementById('tipAmount');
         const totalBillSpan = document.getElementById('totalBill');
+        const perPersonAmountSpan = document.getElementById('perPersonAmount');
+        const tipButtons = document.querySelectorAll('.tip-buttons button');
+        const clearBtn = document.getElementById('clearBtn');
 
         function calculateTip() {
             const billAmount = parseFloat(billAmountInput.value);
             const tipPercentage = parseInt(tipPercentageInput.value);
+            const numPeople = parseInt(numPeopleInput.value);
+
+            // Update tip percentage display
+            tipPercentageDisplay.textContent = `${tipPercentage}%`;
 
             if (isNaN(billAmount) || billAmount < 0) {
                 tipAmountSpan.textContent = '0.00';
                 totalBillSpan.textContent = '0.00';
+                perPersonAmountSpan.textContent = '0.00';
                 return; // Exit if input is invalid
             }
 
-            // Display current tip percentage
-            tipPercentageDisplay.textContent = `${tipPercentage}%`;
-
             const tipAmount = (billAmount * tipPercentage) / 100;
             const totalBill = billAmount + tipAmount;
+            
+            let perPersonAmount = 0;
+            if (!isNaN(numPeople) && numPeople > 0) {
+                perPersonAmount = totalBill / numPeople;
+            } else {
+                numPeopleInput.value = 1; // Default to 1 if invalid
+                perPersonAmount = totalBill;
+            }
 
             // Update display, fixed to 2 decimal places
             tipAmountSpan.textContent = tipAmount.toFixed(2);
             totalBillSpan.textContent = totalBill.toFixed(2);
+            perPersonAmountSpan.textContent = perPersonAmount.toFixed(2);
+        }
+
+        function clearAll() {
+            billAmountInput.value = '';
+            tipPercentageInput.value = '15'; // Reset to default 15%
+            numPeopleInput.value = '1'; // Reset to 1 person
+            calculateTip(); // Recalculate to reset display
         }
 
         // Add event listeners for input changes
         billAmountInput.addEventListener('input', calculateTip);
         tipPercentageInput.addEventListener('input', calculateTip);
+        numPeopleInput.addEventListener('input', calculateTip);
+
+        // Add event listeners for quick tip buttons
+        tipButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tipValue = parseInt(button.dataset.tip);
+                tipPercentageInput.value = tipValue;
+                calculateTip();
+            });
+        });
+
+        // Event listener for Clear All button
+        clearBtn.addEventListener('click', clearAll);
 
         // Initial calculation when the page loads
         document.addEventListener('DOMContentLoaded', calculateTip);
+
+        // Ensure number of people value stays within min/max
+        numPeopleInput.addEventListener('input', () => {
+            let value = parseInt(numPeopleInput.value);
+            if (isNaN(value) || value < 1) {
+                numPeopleInput.value = 1;
+            }
+        });
     </script>
 </body>
 </html>
