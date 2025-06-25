@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Tip Calculator & Bill Splitter - Easy & Free Online Tool</title>
+    <title>Simple Tip Calculator & Bill Splitter - Easy & Free Online Tool</title>
     <meta name="description" content="Calculate tips easily and split your restaurant bill among friends with our free, fast, and simple online tip calculator. Includes common tip percentages.">
-    <link rel="icon" href="https://www.google.com/s2/favicons?domain=example.com" type="image/x-icon">
+    <link rel="icon" href="https://www.google.com/s2/favicons?domain=example.com" type="image/x-icon"> 
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -106,7 +106,7 @@
             margin-top: 5px;
             text-align: right;
         }
-
+        
         .tip-buttons {
             display: flex;
             justify-content: center;
@@ -114,7 +114,6 @@
             margin-top: 15px;
             margin-bottom: 25px;
         }
-
         .tip-buttons button {
             background-color: #2ecc71; /* Greenish */
             color: #fff;
@@ -125,7 +124,6 @@
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
-
         .tip-buttons button:hover {
             background-color: #27ae60;
         }
@@ -135,7 +133,6 @@
             justify-content: flex-end; /* Align to the right */
             margin-top: 20px;
         }
-
         .actions button {
             background-color: #95a5a6; /* Grey for Clear */
             color: #fff;
@@ -147,7 +144,6 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
-
         .actions button:hover {
             background-color: #7f8c8d;
             transform: translateY(-2px);
@@ -170,18 +166,15 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .results p span:first-child {
             font-weight: bold;
             color: #34495e;
         }
-
         .results p span:last-child {
             font-weight: normal;
             color: #e74c3c; /* Red for emphasis */
             font-size: 1.2em;
         }
-
         .results p:last-child span:last-child {
             color: #27ae60; /* Green for total */
         }
@@ -191,7 +184,6 @@
             margin-top: 30px;
             text-align: center;
         }
-
         .ko-fi-button {
             display: inline-block;
             background-color: #FF5E5B; /* Ko-fi's brand color */
@@ -203,23 +195,15 @@
             font-size: 1.1em;
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex; /* To align icon and text */
-            align-items: center;
-            justify-content: center;
-            gap: 10px; /* Space between icon and text */
+            /* Removed flex/gap/img styles as no image is used */
             max-width: fit-content;
             margin: 0 auto; /* Center the button */
         }
-
         .ko-fi-button:hover {
             background-color: #E04E4A;
             transform: translateY(-2px);
         }
-
-        .ko-fi-button img {
-            height: 24px; /* Icon size */
-            width: auto;
-        }
+        /* .ko-fi-button img { height: 24px; width: auto; } Removed */
 
         /* SEO Friendly Text Section */
         .seo-text {
@@ -230,7 +214,6 @@
             color: #666;
             padding: 0 10px;
         }
-
         .seo-text h2 {
             color: #2c3e50;
             font-size: 1.5em;
@@ -261,25 +244,20 @@
             .container {
                 padding: 20px 25px;
             }
-
             h1 {
                 font-size: 1.8em;
             }
-
             .results p {
                 flex-direction: column;
                 align-items: flex-start;
             }
-
             .results p span:last-child {
                 margin-top: 5px;
             }
-
             .adsense-placeholder {
                 height: 60px; /* Smaller ad unit for mobile */
                 max-width: 320px;
             }
-
             .tip-buttons {
                 flex-wrap: wrap;
             }
@@ -317,14 +295,13 @@
             <p><span>Total Bill:</span> $<span id="totalBill">0.00</span></p>
             <p><span>Per Person:</span> $<span id="perPersonAmount">0.00</span></p>
         </div>
-
+        
         <div class="actions">
             <button id="clearBtn">Clear All</button>
         </div>
 
         <div class="ko-fi-button-container">
             <a href="https://ko-fi.com/ytseo1509" target="_blank" rel="noopener noreferrer" class="ko-fi-button">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/2075324536749629470" alt="Ko-fi icon">
                 Support Me on Ko-fi
             </a>
         </div>
@@ -368,7 +345,7 @@
 
             const tipAmount = (billAmount * tipPercentage) / 100;
             const totalBill = billAmount + tipAmount;
-
+            
             let perPersonAmount = 0;
             if (!isNaN(numPeople) && numPeople > 0) {
                 perPersonAmount = totalBill / numPeople;
